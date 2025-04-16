@@ -3,8 +3,6 @@
 import user_data from "./commons_page"
 
 //Elementos da página de cadastro de usuário
-
-let dados = user_data.user_data()
 const cadastro_usuario_page = '.account_form > h3'
 
 //Inputs
@@ -22,75 +20,45 @@ const msg_error = '#errorMessageFirstName'
 
 //Açoes
 export default {
-    
-    checarCadastroUsuario() {
+    checarCadastroUsuario(mensagem) {
         cy.get(cadastro_usuario_page)
             .should('be.visible')
-            .should('have.text', 'Cadastro de usuário')   
+            .should('have.text', mensagem)   
     },
-
-    preencherCampoNome() {
+    preencherCampoNome(nome) {
         cy.get(user_name_input)
             .should('be.visible')
-            .type(dados.user_name)
-            .should('have.value', dados.user_name)
+            .type(nome)
+            .should('have.value', nome)
     },
-
-    preencherCampoEmailValido() {
+    preencherCampoEmail(email) {
         cy.get(user_email_input)
             .should('be.visible')
-            .type(dados.user_email_valid)
-            .should('have.value',dados.user_email_valid)
-    },
-
-    preencherCampoEmailInvalido() {
-        cy.get(user_email_input)
-            .should('be.visible')
-            .type(dados.user_email_invalid)
-            .should('have.value',dados.user_email_invalid)
-    },
-    preencherCampoSenhaValida() {
+            .type(email)
+            .should('have.value', email)
+    }, 
+    preencherCampoSenha(senha) {
         cy.get(user_password_input)
             .should('be.visible')
-            .type(dados.user_password_valid)
-            .should('have.value', dados.user_password_valid)
+            .type(senha)
+            .should('have.value', senha)
     },
-
-    preencherCampoSenhaInvalida() {
-        cy.get(user_password_input)
-            .should('be.visible')
-            .type(dados.user_password_invalid)
-            .should('have.value', dados.user_password_invalid)
-    },
-
     clicarBotaoCadastrar() {
         cy.get(btn_register)
             .should('be.visible')
             .click()
     },
-
-    verificarCadastroComSucesso() {
+    verificarCadastroComSucesso(mensagem, nome) {
      cy.get(msg_success)
         .should('be.visible')
-        .should('have.text', 'Cadastro realizado!')  
+        .should('have.text', mensagem)  
     cy.get(msg_welcome)
         .should('be.visible')
-        .should('have.text', `Bem-vindo ${dados.user_name}`)  
+        .should('have.text', `Bem-vindo ${nome}`)  
     },
-
-    verificarMensagemCampoNomeVazio() {
+    verificarMensagemErro(mensagem) {
         cy.get(msg_error)
             .should('be.visible')
-            .should('have.text', 'O campo nome deve ser prenchido')
-    },
-    verificarMensagemCampoEmailInvalido() {
-        cy.get(msg_error)
-            .should('be.visible')
-            .should('have.text', 'O campo e-mail deve ser prenchido corretamente')
-    },
-    verificarMensagemSenhaInvalida() {
-        cy.get(msg_error)
-            .should('be.visible')
-            .should('have.text', 'O campo senha deve ter pelo menos 6 dígitos')
-    },
+            .should('have.text', mensagem)
+    }
 }
